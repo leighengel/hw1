@@ -111,14 +111,136 @@
 .headers off
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
--- TODO!
+-- TODO! (how)
+
+DROP TABLE IF EXISTS studios;
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS MPAA;
+
 
 -- Create new tables, according to your domain model
 -- TODO!
 
+
+-- Studio Table
+CREATE TABLE studios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT
+);
+
+-- Movies Table
+CREATE TABLE movies (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT,
+  year_released INTEGER,
+  mpaa_rating TEXT,
+  studio_id INTEGER,
+  FOREIGN KEY (studio_id) REFERENCES studios(id)
+);
+
+-- Actors Table
+CREATE TABLE actors (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT
+);
+
+-- Movie Roles Table
+CREATE TABLE movie_roles (
+  movie_id INTEGER,
+  actor_id INTEGER,
+  character_name TEXT,
+  FOREIGN KEY (movie_id) REFERENCES movies(id),
+  FOREIGN KEY (actor_id) REFERENCES actors(id)
+);
+
+-- BEGIN LEIGH ORIGINAL CODE 
+
+-- CREATE TABLE studios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  studio_name TEXT,
+  information TEXT
+--);
+
+-- CREATE TABLE movies (
+ -- id INTEGER PRIMARY KEY AUTOINCREMENT,
+  --studio_id INTEGER,
+  --actors TEXT,
+  --roles TEXT
+--);
+
+  --id INTEGER PRIMARY KEY AUTOINCREMENT,
+  --title TEXT,
+  --year_released INTEGER,
+  --mpaa_rating TEXT,
+  --studio_id INTEGER,
+  --FOREIGN KEY (studio_id) REFERENCES studios(id)
+--);
+
+--CREATE TABLE MPAA (
+  --id INTEGER PRIMARY KEY AUTOINCREMENT,
+  --movie_id INTEGER,
+  --studio_id INTEGER,
+  --rating TEXT
+--);
+
+--CREATE TABLE actors (
+  --id INTEGER PRIMARY KEY AUTOINCREMENT,
+  --studio_id INTEGER,
+  --role_id INTEGER
+--);
+
+-- END LEIGH ORIGINAL CODE
+
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
+
+-- Insert Studio Data
+INSERT INTO studios (name) VALUES ('Warner Bros.');
+
+-- Insert Movie Data
+-- Assuming Warner Bros. has an ID of 1
+
+INSERT INTO movies (title, year_released, mpaa_rating, studio_id) VALUES 
+('Batman Begins', 2005, 'PG-13', 1),
+('The Dark Knight', 2008, 'PG-13', 1),
+('The Dark Knight Rises', 2012, 'PG-13', 1);
+
+-- Insert Actor Data
+INSERT INTO actors (name) VALUES 
+('Christian Bale'),
+('Michael Caine'),
+('Liam Neeson'),
+('Katie Holmes'),
+('Gary Oldman'),
+('Heath Ledger'),
+('Aaron Eckhart'),
+('Maggie Gyllenhaal'),
+('Tom Hardy'),
+('Joseph Gordon-Levitt'),
+('Anne Hathaway');
+
+-- Insert Movie Roles Data
+-- Assuming movie IDs and actor IDs are assigned in order of insertion starting from 1
+INSERT INTO movie_roles (movie_id, actor_id, character_name) VALUES 
+(1, 1, 'Bruce Wayne'),
+(1, 2, 'Alfred'),
+(1, 3, 'Ra's Al Ghul'),
+(1, 4, 'Rachel Dawes'),
+(1, 5, 'Commissioner Gordon'),
+(2, 1, 'Bruce Wayne'),
+(2, 6, 'Joker'),
+(2, 7, 'Harvey Dent'),
+(2, 2, 'Alfred'),
+(2, 8, 'Rachel Dawes'),
+(3, 1, 'Bruce Wayne'),
+(3, 5, 'Commissioner Gordon'),
+(3, 9, 'Bane'),
+(3, 10, 'John Blake'),
+(3, 11, 'Selina Kyle');
+
+
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -127,6 +249,8 @@
 
 -- The SQL statement for the movies output
 -- TODO!
+
+SELECT 
 
 -- Prints a header for the cast output
 .print ""
