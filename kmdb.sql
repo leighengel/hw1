@@ -116,7 +116,7 @@
 DROP TABLE IF EXISTS studios;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS actors;
-DROP TABLE IF EXISTS MPAA;
+DROP TABLE IF EXISTS movie_roles;
 
 
 -- Create new tables, according to your domain model
