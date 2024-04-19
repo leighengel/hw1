@@ -154,44 +154,6 @@ CREATE TABLE movie_roles (
   FOREIGN KEY (actor_id) REFERENCES actors(id)
 );
 
--- BEGIN LEIGH ORIGINAL CODE 
-
--- CREATE TABLE studios (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  studio_name TEXT,
-  information TEXT
---);
-
--- CREATE TABLE movies (
- -- id INTEGER PRIMARY KEY AUTOINCREMENT,
-  --studio_id INTEGER,
-  --actors TEXT,
-  --roles TEXT
---);
-
-  --id INTEGER PRIMARY KEY AUTOINCREMENT,
-  --title TEXT,
-  --year_released INTEGER,
-  --mpaa_rating TEXT,
-  --studio_id INTEGER,
-  --FOREIGN KEY (studio_id) REFERENCES studios(id)
---);
-
---CREATE TABLE MPAA (
-  --id INTEGER PRIMARY KEY AUTOINCREMENT,
-  --movie_id INTEGER,
-  --studio_id INTEGER,
-  --rating TEXT
---);
-
---CREATE TABLE actors (
-  --id INTEGER PRIMARY KEY AUTOINCREMENT,
-  --studio_id INTEGER,
-  --role_id INTEGER
---);
-
--- END LEIGH ORIGINAL CODE
-
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
@@ -223,10 +185,11 @@ INSERT INTO actors (name) VALUES
 
 -- Insert Movie Roles Data
 -- Assuming movie IDs and actor IDs are assigned in order of insertion starting from 1
+
 INSERT INTO movie_roles (movie_id, actor_id, character_name) VALUES 
 (1, 1, 'Bruce Wayne'),
 (1, 2, 'Alfred'),
-(1, 3, 'Ra's Al Ghul'),
+(1, 3, "Ra's Al Ghul"),
 (1, 4, 'Rachel Dawes'),
 (1, 5, 'Commissioner Gordon'),
 (2, 1, 'Bruce Wayne'),
@@ -241,7 +204,6 @@ INSERT INTO movie_roles (movie_id, actor_id, character_name) VALUES
 (3, 11, 'Selina Kyle');
 
 
-
 -- Prints a header for the movies output
 .print "Movies"
 .print "======"
@@ -250,7 +212,9 @@ INSERT INTO movie_roles (movie_id, actor_id, character_name) VALUES
 -- The SQL statement for the movies output
 -- TODO!
 
-SELECT 
+SELECT movies.title, movies.year_released, movies.mpaa_rating, studios.name AS studio_name
+FROM movies
+JOIN studios ON movies.studio_id = studios.id;
 
 -- Prints a header for the cast output
 .print ""
@@ -258,6 +222,10 @@ SELECT
 .print "========"
 .print ""
 
-
 -- The SQL statement for the cast output
 -- TODO!
+
+SELECT movies.title, actors.name, movie_roles.character_name
+FROM movies
+INNER JOIN movie_roles ON movies.id=movie_roles.movie_id
+INNER JOIN actors ON actors.id=movie_roles.actor_id;
